@@ -86,8 +86,7 @@ private val darkScheme = darkColorScheme(
 @Composable
 fun Nsh07Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
   val colorScheme = when (darkTheme) {
       true -> darkScheme
