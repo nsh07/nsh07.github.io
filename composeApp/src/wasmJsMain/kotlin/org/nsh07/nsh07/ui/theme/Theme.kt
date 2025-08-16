@@ -1,4 +1,5 @@
 package org.nsh07.nsh07.ui.theme
+
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialExpressiveTheme
@@ -88,15 +89,15 @@ fun Nsh07Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-  val colorScheme = when (darkTheme) {
-      true -> darkScheme
-      else -> lightScheme
-  }
+    val colorScheme = when (darkTheme) {
+        true -> darkScheme
+        else -> lightScheme
+    }
 
-  MaterialExpressiveTheme(
-    colorScheme = colorScheme,
-    typography = AppTypography(),
-    content = content
-  )
+    MaterialExpressiveTheme(
+        colorScheme = colorScheme,
+        typography = AppTypography(),
+        content = content
+    )
 }
 
