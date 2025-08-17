@@ -2,8 +2,11 @@ package org.nsh07.nsh07
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Scaffold
@@ -22,12 +25,21 @@ fun App() {
     Nsh07Theme {
         Scaffold {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                Column(
+                LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxHeight()
                 ) {
-                    CircularWavyProgressIndicator()
-                    Text("Coming Soon...", fontSize = 64.sp, textAlign = TextAlign.Center, lineHeight = 68.sp)
+                    item {
+                        CircularWavyProgressIndicator()
+                        Spacer(Modifier.height(16.dp))
+                        Text(
+                            "Coming Soon...",
+                            fontSize = 64.sp,
+                            textAlign = TextAlign.Center,
+                            lineHeight = 68.sp
+                        )
+                    }
                 }
             }
         }
