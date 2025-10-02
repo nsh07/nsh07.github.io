@@ -33,8 +33,8 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation("org.jetbrains.compose.material3:material3:1.9.0-beta03")
-            implementation("org.jetbrains.compose.material3:material3-window-size-class:1.9.0-beta03")
+            implementation("org.jetbrains.compose.material3:material3:1.9.0-beta06")
+            implementation("org.jetbrains.compose.material3:material3-window-size-class:1.9.0-beta06")
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
