@@ -1,5 +1,6 @@
 package org.nsh07.nsh07.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +13,8 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nsh07.composeapp.generated.resources.*
@@ -20,6 +23,7 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {
+    val uriHandler = LocalUriHandler.current
     var selectedItem by remember { mutableStateOf(0) }
     val paragraphs = remember {
         listOf(
@@ -27,7 +31,6 @@ fun AppScreen(modifier: Modifier = Modifier) {
             "I've written a variety of programs in multiple languages over my years as a hobbyist developer since back when I was in middle and high school (~2019) in Python and C++, spanning multiple areas like games, CLI tools, GUI tools and automation scripts. I'm continuing to work towards persuing my passion of software development as my career, now as a CS student."
         )
     }
-
 
     Row(
         modifier = Modifier
@@ -143,6 +146,70 @@ fun AppScreen(modifier: Modifier = Modifier) {
                     Spacer(Modifier.height(16.dp))
                     Text("Work in progress", style = typography.headlineSmall)
                 }
+            }
+            item {
+                Text(
+                    buildAnnotatedString {
+                        append("Design inspired by ")
+                        withLink(
+                            LinkAnnotation.Url(
+                                url = "https://brittanychiang.com/",
+                                styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
+                            )
+                        ) {
+                            append("Brittany Chiang")
+                        }
+                        append("'s website")
+                    },
+                    color = colorScheme.outline,
+                    style = typography.bodyMedium
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Built with ", style = typography.bodyMedium, color = colorScheme.outline)
+                    Icon(
+                        painterResource(Res.drawable.compose),
+                        null,
+                        modifier = Modifier.clickable { uriHandler.openUri("https://www.jetbrains.com/compose-multiplatform/") }
+                    )
+                    Text(" in Kotlin. Deployed with ", style = typography.bodyMedium, color = colorScheme.outline)
+                    Icon(
+                        painterResource(Res.drawable.githubpages),
+                        null,
+                        modifier = Modifier
+                            .height(20.dp)
+                            .clickable { uriHandler.openUri("https://pages.github.com/") }
+                    )
+                    Text(".", style = typography.bodyMedium, color = colorScheme.outline)
+                }
+                Text(
+                    buildAnnotatedString {
+                        append("Text is set in ")
+                        withLink(
+                            LinkAnnotation.Url(
+                                url = "https://fonts.google.com/specimen/DM+Serif+Text",
+                                styles = TextLinkStyles(
+                                    SpanStyle(
+                                        color = colorScheme.onSurface,
+                                        fontFamily = typography.displayLarge.fontFamily
+                                    )
+                                )
+                            )
+                        ) {
+                            append("DM Serif Text")
+                        }
+                        append(" and ")
+                        withLink(
+                            LinkAnnotation.Url(
+                                url = "https://rsms.me/inter/",
+                                styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
+                            )
+                        ) {
+                            append("Inter")
+                        }
+                        append('.')
+                    },
+                    color = colorScheme.outline, style = typography.bodyMedium
+                )
             }
         }
     }
