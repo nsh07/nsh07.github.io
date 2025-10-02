@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.FontFamily
 
 import nsh07.composeapp.generated.resources.Res
 import nsh07.composeapp.generated.resources.dm_serif_text
-import nsh07.composeapp.generated.resources.nunito_variable
+import nsh07.composeapp.generated.resources.inter_variable
 import org.jetbrains.compose.resources.Font
 
 // Default Material 3 typography values
@@ -14,7 +14,7 @@ val baseline = Typography()
 
 @Composable
 fun AppTypography() = Typography().run {
-    val bodyFontFamily = FontFamily(Font(Res.font.nunito_variable))
+    val bodyFontFamily = FontFamily(Font(Res.font.inter_variable))
 
     val displayFontFamily = FontFamily(Font(Res.font.dm_serif_text))
 
