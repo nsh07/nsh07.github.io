@@ -1,6 +1,8 @@
 package org.nsh07.nsh07.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -14,13 +16,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nsh07.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.nsh07.nsh07.ui.theme.Nsh07Theme
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {
     var selectedItem by remember { mutableStateOf(0) }
+    val paragraphs = remember {
+        listOf(
+            "Hi, I'm Nishant. I'm currently a hobbyist software developer and a computer science student at the Indian Institute of Information Technology Bhagalpur.",
+            "I've written a variety of programs in multiple languages over my years as a hobbyist developer since back when I was in middle and high school (~2019) in Python and C++, spanning multiple areas like games, CLI tools, GUI tools and automation scripts. I'm continuing to work towards persuing my passion of software development as my career, now as a CS student."
+        )
+    }
+
+
     Row(
         modifier = Modifier
             .padding(start = 32.dp, end = 48.dp)
@@ -46,7 +54,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
                 "I build performant, beautiful apps for mobile phones.",
                 style = typography.bodyLarge,
                 color = colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = 20.dp)
+                modifier = Modifier.padding(start = 20.dp).widthIn(max = 320.dp)
             )
 
             Spacer(Modifier.height(72.dp))
@@ -109,26 +117,33 @@ fun AppScreen(modifier: Modifier = Modifier) {
 
         Spacer(Modifier.width(16.dp))
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxHeight().padding(vertical = 96.dp).weight(1f)
+        LazyColumn(
+            contentPadding = PaddingValues(vertical = 96.dp),
+            modifier = Modifier.fillMaxHeight().weight(1f)
         ) {
-            Icon(
-                painterResource(Res.drawable.forklift),
-                null,
-                modifier = Modifier.size(64.dp)
-            )
-            Spacer(Modifier.height(16.dp))
-            Text("Work in progress", style = typography.headlineSmall)
+            items(paragraphs) {
+                Text(
+                    it,
+                    style = typography.bodyLarge,
+                    color = colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 56.dp)
+                ) {
+                    Icon(
+                        painterResource(Res.drawable.forklift),
+                        null,
+                        modifier = Modifier.size(64.dp)
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    Text("Work in progress", style = typography.headlineSmall)
+                }
+            }
         }
-    }
-}
-
-@Preview(widthDp = 1920, heightDp = 1080)
-@Composable
-fun AppScreenPreview() {
-    Nsh07Theme {
-        AppScreen()
     }
 }
