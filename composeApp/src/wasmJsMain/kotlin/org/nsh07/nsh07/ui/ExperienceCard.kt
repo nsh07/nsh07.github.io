@@ -1,11 +1,7 @@
 package org.nsh07.nsh07.ui
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -14,7 +10,6 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,21 +35,10 @@ fun ExperienceCard(
     val colorScheme = colorScheme
     val uriHandler = LocalUriHandler.current
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val hovered by interactionSource.collectIsHoveredAsState()
-
-    val backgroundColor by animateColorAsState(
-        if (hovered) colorScheme.surfaceContainerLowest else colorScheme.surface,
-        animationSpec = tween()
-    )
     Box(
         modifier
             .clip(shapes.large)
-            .background(backgroundColor)
-            .clickable(
-                onClick = { uriHandler.openUri(experience.companyUrl) },
-                interactionSource = interactionSource
-            )
+            .clickable { uriHandler.openUri(experience.companyUrl) }
     ) {
         Row(Modifier.fillMaxWidth().padding(cardPadding)) {
             Text(
@@ -79,11 +63,11 @@ fun ExperienceCard(
                     modifier = Modifier.padding(top = 16.dp)
                 ) {
                     experience.skills.fastForEach {
-                        Box(Modifier.clip(CircleShape).background(colorScheme.secondaryContainer)) {
+                        Box(Modifier.clip(CircleShape).background(colorScheme.primaryContainer)) {
                             Text(
                                 it,
                                 style = typography.labelMedium,
-                                color = colorScheme.onSecondaryContainer,
+                                color = colorScheme.onPrimaryContainer,
                                 modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)
                             )
                         }

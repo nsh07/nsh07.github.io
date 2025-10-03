@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -17,6 +18,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import nsh07.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 
@@ -24,14 +26,18 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun AppScreen(modifier: Modifier = Modifier) {
     val uriHandler = LocalUriHandler.current
-    var selectedItem by remember { mutableStateOf(0) }
+    val scope = rememberCoroutineScope()
+
+    val listState = rememberLazyListState()
+    val firstVisibleItem by derivedStateOf { listState.firstVisibleItemIndex }
 
     val paragraphs = remember {
         listOf(
-            "Hi, I'm Nishant. I'm currently a hobbyist software developer and a computer science student at the Indian Institute of Information Technology Bhagalpur.",
+            "Hi, I'm Nishant. I'm currently a hobbyist open-source software developer and a computer science student at the Indian Institute of Information Technology Bhagalpur.",
             "I've written a variety of programs in multiple languages over my years as a hobbyist developer since back when I was in middle and high school (~2019) in Python and C++, spanning multiple areas like games, CLI tools, GUI tools and automation scripts. I'm continuing to work towards persuing my passion of software development as my career, now as a CS student."
         )
     }
+    val paragraphCount = remember { paragraphs.size }
 
     val experiences = remember {
         listOf(
@@ -46,6 +52,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
             )
         )
     }
+    val experienceCount = remember { experiences.size }
 
     val cardPadding = remember { 16.dp }
 
@@ -78,20 +85,26 @@ fun AppScreen(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(72.dp))
 
             NavigationItem(
-                selected = selectedItem == 0,
-                onClick = { selectedItem = 0 },
+                selected = firstVisibleItem < paragraphCount + 1,
+                onClick = {
+                    scope.launch { listState.animateScrollToItem(0) }
+                },
                 label = { Text("About", style = typography.bodyMedium) },
                 modifier = Modifier.offset(x = (-20).dp)
             )
             NavigationItem(
-                selected = selectedItem == 1,
-                onClick = { selectedItem = 1 },
+                selected = firstVisibleItem in paragraphCount + 1..<paragraphCount + experienceCount + 2,
+                onClick = {
+                    scope.launch { listState.animateScrollToItem(paragraphCount + 1) }
+                },
                 label = { Text("Experience", style = typography.bodyMedium) },
                 modifier = Modifier.offset(x = (-20).dp)
             )
             NavigationItem(
-                selected = selectedItem == 2,
-                onClick = { selectedItem = 2 },
+                selected = firstVisibleItem >= paragraphCount + experienceCount + 2,
+                onClick = {
+                    scope.launch { listState.animateScrollToItem(paragraphCount + experienceCount + 2) }
+                },
                 label = { Text("Projects", style = typography.bodyMedium) },
                 modifier = Modifier.offset(x = (-20).dp)
             )
@@ -136,6 +149,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
         }
 
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(vertical = 96.dp),
             modifier = Modifier.fillMaxHeight().weight(1.1f)
         ) {
@@ -245,7 +259,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
                         ) {
                             append("Brittany Chiang")
                         }
-                        append("'s website")
+                        append("'s website.")
                     },
                     color = colorScheme.outline,
                     style = typography.bodyMedium,
