@@ -25,12 +25,29 @@ import org.jetbrains.compose.resources.painterResource
 fun AppScreen(modifier: Modifier = Modifier) {
     val uriHandler = LocalUriHandler.current
     var selectedItem by remember { mutableStateOf(0) }
+
     val paragraphs = remember {
         listOf(
             "Hi, I'm Nishant. I'm currently a hobbyist software developer and a computer science student at the Indian Institute of Information Technology Bhagalpur.",
             "I've written a variety of programs in multiple languages over my years as a hobbyist developer since back when I was in middle and high school (~2019) in Python and C++, spanning multiple areas like games, CLI tools, GUI tools and automation scripts. I'm continuing to work towards persuing my passion of software development as my career, now as a CS student."
         )
     }
+
+    val experiences = remember {
+        listOf(
+            Experience(
+                start = "May",
+                end = "June 2022",
+                position = "Research Asst. (Android Dev)",
+                description = "Created an Android app for collecting and compiling a validation dataset for a binary image classification model from scratch. Generated output from the model on-device for a fast, offline experience. Designed an intuitive UI, with options for viewing and editing entries in the dataset. Optimized the UX: the validation dataset can be exported to the device with the click of a button.",
+                company = "AIIMS Guwahati",
+                companyUrl = "https://aiimsguwahati.ac.in/",
+                skills = listOf("Kotlin", "Jetpack Compose", "PyTorch Android", "Android SDK")
+            )
+        )
+    }
+
+    val cardPadding = remember { 16.dp }
 
     Row(
         modifier = Modifier
@@ -42,15 +59,13 @@ fun AppScreen(modifier: Modifier = Modifier) {
             Text(
                 "Nishant Mishra",
                 style = typography.displayLarge.copy(fontSize = 48.sp),
-                color = colorScheme.onSurface,
-//                modifier = Modifier.padding(start = 20.dp)
+                color = colorScheme.onSurface
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 "Mobile app developer",
                 style = typography.titleLarge,
-                color = colorScheme.onSurface,
-//                modifier = Modifier.padding(start = 20.dp)
+                color = colorScheme.onSurface
             )
             Spacer(Modifier.height(20.dp))
             Text(
@@ -87,8 +102,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-//                modifier = Modifier.padding(start = 20.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { uriHandler.openUri("https://github.com/nsh07") }) {
                     Icon(
@@ -123,16 +137,21 @@ fun AppScreen(modifier: Modifier = Modifier) {
 
         LazyColumn(
             contentPadding = PaddingValues(vertical = 96.dp),
-            modifier = Modifier.fillMaxHeight().weight(1f)
+            modifier = Modifier.fillMaxHeight().weight(1.1f)
         ) {
             items(paragraphs) {
                 Text(
                     it,
                     style = typography.bodyLarge,
                     color = colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(start = cardPadding, bottom = 16.dp, end = cardPadding)
                 )
             }
+            item { Spacer(Modifier.height(112.dp)) }
+            items(experiences) {
+                ExperienceCard(experience = it, cardPadding = cardPadding)
+            }
+            item { Spacer(Modifier.height(112.dp)) }
             item {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -148,24 +167,12 @@ fun AppScreen(modifier: Modifier = Modifier) {
                     Text("Work in progress", style = typography.headlineSmall)
                 }
             }
+            item { Spacer(Modifier.height(112.dp)) }
             item {
-                Text(
-                    buildAnnotatedString {
-                        append("Layout inspired by ")
-                        withLink(
-                            LinkAnnotation.Url(
-                                url = "https://brittanychiang.com/",
-                                styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
-                            )
-                        ) {
-                            append("Brittany Chiang")
-                        }
-                        append("'s website")
-                    },
-                    color = colorScheme.outline,
-                    style = typography.bodyMedium
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = cardPadding)
+                ) {
                     Text(
                         buildAnnotatedString {
                             append("Built with ")
@@ -223,7 +230,26 @@ fun AppScreen(modifier: Modifier = Modifier) {
                         }
                         append('.')
                     },
-                    color = colorScheme.outline, style = typography.bodyMedium
+                    color = colorScheme.outline,
+                    style = typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = cardPadding)
+                )
+                Text(
+                    buildAnnotatedString {
+                        append("Layout inspired by ")
+                        withLink(
+                            LinkAnnotation.Url(
+                                url = "https://brittanychiang.com/",
+                                styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
+                            )
+                        ) {
+                            append("Brittany Chiang")
+                        }
+                        append("'s website")
+                    },
+                    color = colorScheme.outline,
+                    style = typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = cardPadding)
                 )
             }
         }
