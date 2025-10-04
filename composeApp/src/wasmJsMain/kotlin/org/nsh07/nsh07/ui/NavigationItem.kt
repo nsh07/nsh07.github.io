@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NavigationItem(
     selected: Boolean,
@@ -24,7 +26,7 @@ fun NavigationItem(
     colors: NavigationItemColors = WideNavigationRailItemDefaults.colors(),
     interactionSource: MutableInteractionSource? = null
 ) {
-    val lineWidth by animateDpAsState(if (selected) 64.dp else 32.dp)
+    val lineWidth by animateDpAsState(if (selected) 64.dp else 32.dp, motionScheme.fastSpatialSpec())
 
     WideNavigationRailItem(
         selected = selected,
