@@ -44,7 +44,7 @@ fun ProjectCard(
                 model = projectImageUri,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.padding(end = 16.dp).weight(1f)
             )
             Column(Modifier.weight(3f)) {
                 FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {

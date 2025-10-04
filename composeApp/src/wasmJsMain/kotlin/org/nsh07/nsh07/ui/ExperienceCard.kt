@@ -46,7 +46,7 @@ fun ExperienceCard(
                 remember { "${experience.start} $mdash ${experience.end}".toUpperCase(Locale.current) },
                 style = typography.labelMedium,
                 color = colorScheme.outline,
-                modifier = Modifier.padding(vertical = 4.dp).weight(1f)
+                modifier = Modifier.padding(top = 4.dp, end = 16.dp).weight(1f)
             )
             Column(Modifier.weight(3f)) {
                 FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
@@ -65,7 +65,7 @@ fun ExperienceCard(
                     color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp)
                 )
-                LabelRow(experience.skills, Modifier.padding(top = 16.dp))
+                if (experience.skills.isNotEmpty()) LabelRow(experience.skills, Modifier.padding(top = 16.dp))
             }
         }
     }

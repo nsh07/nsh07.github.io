@@ -43,6 +43,15 @@ fun AppScreen(modifier: Modifier = Modifier) {
     val experiences = remember {
         listOf(
             Experience(
+                start = "Aug 2025",
+                end = "Present",
+                position = "Open Source Lead",
+                description = "Perform the role of Open Source Lead of the Development Club. Helped successfully organise OPCODE (Open Source Fest) 2025.",
+                company = "DevC, IIIT Bhagalpur",
+                companyUrl = "https://gymkhana.iiitbh.ac.in/technical/",
+                skills = listOf()
+            ),
+            Experience(
                 start = "May",
                 end = "June 2025",
                 position = "Research Asst. (Android Dev)",
@@ -71,13 +80,13 @@ fun AppScreen(modifier: Modifier = Modifier) {
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                "Mobile app developer",
+                "App developer",
                 style = typography.titleLarge,
                 color = colorScheme.onSurface
             )
             Spacer(Modifier.height(20.dp))
             Text(
-                "I build performant, beautiful apps for mobile phones.",
+                "I build performant, beautiful apps for mobile and desktop.",
                 style = typography.bodyLarge,
                 color = colorScheme.onSurfaceVariant,
                 modifier = Modifier.widthIn(max = 320.dp)
@@ -154,7 +163,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
             contentPadding = PaddingValues(vertical = 96.dp),
             modifier = Modifier.fillMaxHeight().weight(1.1f)
         ) {
-            items(paragraphs) {
+            items(paragraphs, key = { it.substring(0, 16) }) {
                 Text(
                     it,
                     style = typography.bodyLarge,
@@ -162,15 +171,15 @@ fun AppScreen(modifier: Modifier = Modifier) {
                     modifier = Modifier.padding(start = cardPadding, bottom = 16.dp, end = cardPadding)
                 )
             }
-            item { Spacer(Modifier.height(112.dp)) }
-            items(experiences) {
-                ExperienceCard(experience = it, cardPadding = cardPadding)
+            item("experience spacer") { Spacer(Modifier.height(112.dp)) }
+            items(experiences, key = { it.start }) {
+                ExperienceCard(experience = it, cardPadding = cardPadding, modifier = Modifier.padding(bottom = 32.dp))
             }
-            item {
+            item("linkedin link text") {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .padding(start = cardPadding, top = 32.dp)
+                        .padding(start = cardPadding)
                         .clickable { uriHandler.openUri("https://www.linkedin.com/in/nsh07/") }
                 ) {
                     Text("View LinkedIn Profile ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
@@ -178,7 +187,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
                 }
                 Spacer(Modifier.height(112.dp))
             }
-            item {
+            item("work in progress") {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
@@ -193,8 +202,8 @@ fun AppScreen(modifier: Modifier = Modifier) {
                     Text("Work in progress", style = typography.headlineSmall)
                 }
             }
-            item { Spacer(Modifier.height(112.dp)) }
-            item {
+            item("tech stack spacer") { Spacer(Modifier.height(112.dp)) }
+            item("tech stack") {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(horizontal = cardPadding)
