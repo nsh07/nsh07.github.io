@@ -44,7 +44,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
         listOf(
             Experience(
                 start = "May",
-                end = "June 2022",
+                end = "June 2025",
                 position = "Research Asst. (Android Dev)",
                 description = "Created an Android app for collecting and compiling a validation dataset for a binary image classification model from scratch. Generated output from the model on-device for a fast, offline experience. Designed an intuitive UI, with options for viewing and editing entries in the dataset. Optimized the UX: the validation dataset can be exported to the device with the click of a button.",
                 company = "AIIMS Guwahati",

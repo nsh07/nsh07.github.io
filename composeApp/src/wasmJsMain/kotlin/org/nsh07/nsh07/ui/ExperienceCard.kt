@@ -65,22 +65,27 @@ fun ExperienceCard(
                     color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp)
                 )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    modifier = Modifier.padding(top = 16.dp)
-                ) {
-                    experience.skills.fastForEach {
-                        Box(Modifier.clip(CircleShape).background(colorScheme.primaryContainer)) {
-                            Text(
-                                it,
-                                style = typography.labelMedium,
-                                color = colorScheme.onPrimaryContainer,
-                                modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)
-                            )
-                        }
-                    }
-                }
+                LabelRow(experience.skills, Modifier.padding(top = 16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun LabelRow(list: List<String>, modifier: Modifier = Modifier) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
+    ) {
+        list.fastForEach {
+            Box(Modifier.clip(CircleShape).background(colorScheme.secondaryContainer)) {
+                Text(
+                    it,
+                    style = typography.labelMedium,
+                    color = colorScheme.onSecondaryContainer,
+                    modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp)
+                )
             }
         }
     }
