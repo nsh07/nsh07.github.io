@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.*
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
@@ -165,7 +166,18 @@ fun AppScreen(modifier: Modifier = Modifier) {
             items(experiences) {
                 ExperienceCard(experience = it, cardPadding = cardPadding)
             }
-            item { Spacer(Modifier.height(112.dp)) }
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(start = cardPadding, top = 32.dp)
+                        .clickable { uriHandler.openUri("https://www.linkedin.com/in/nsh07/") }
+                ) {
+                    Text("View LinkedIn Profile ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                    Icon(painterResource(Res.drawable.open_in_browser), null, Modifier.size(16.dp))
+                }
+                Spacer(Modifier.height(112.dp))
+            }
             item {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
