@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -72,7 +74,7 @@ fun AppScreen(modifier: Modifier = Modifier) {
             .widthIn(max = 1200.dp)
             .then(modifier)
     ) {
-        Column(Modifier.padding(vertical = 96.dp).weight(1f)) {
+        Column(Modifier.padding(vertical = 96.dp).weight(1f).verticalScroll(rememberScrollState())) {
             Text(
                 "Nishant Mishra",
                 style = typography.displayLarge.copy(fontSize = 48.sp),
