@@ -27,6 +27,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Clean build environment
+        run: ./gradlew clean
+
       - name: Build WasmJS App
         run: ./gradlew :composeApp:wasmJsBrowserDistribution
 
