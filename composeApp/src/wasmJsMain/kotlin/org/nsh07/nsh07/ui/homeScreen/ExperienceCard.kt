@@ -1,4 +1,4 @@
-package org.nsh07.nsh07.ui
+package org.nsh07.nsh07.ui.homeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

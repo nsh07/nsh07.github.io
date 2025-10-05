@@ -1,4 +1,4 @@
-package org.nsh07.nsh07.ui
+package org.nsh07.nsh07.ui.homeScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,7 +21,7 @@ import nsh07.composeapp.generated.resources.Res
 import nsh07.composeapp.generated.resources.open_in_browser
 import nsh07.composeapp.generated.resources.star
 import org.jetbrains.compose.resources.painterResource
-import org.nsh07.nsh07.ui.network.Repo
+import org.nsh07.nsh07.network.Repo
 
 @Composable
 fun ProjectCard(
