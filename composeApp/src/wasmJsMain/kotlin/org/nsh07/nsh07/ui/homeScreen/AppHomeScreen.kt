@@ -25,7 +25,10 @@ import nsh07.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun AppHomeScreen(modifier: Modifier = Modifier) {
+fun AppHomeScreen(
+    projectState: ProjectsState,
+    modifier: Modifier = Modifier
+) {
     val uriHandler = LocalUriHandler.current
     val scope = rememberCoroutineScope()
 
@@ -186,6 +189,14 @@ fun AppHomeScreen(modifier: Modifier = Modifier) {
                     Icon(painterResource(Res.drawable.open_in_browser), null, Modifier.size(16.dp))
                 }
                 Spacer(Modifier.height(112.dp))
+            }
+            items(projectState.projects, key = { it.id }) {
+                ProjectCard(
+                    project = it,
+                    cardPadding = cardPadding,
+                    projectImageUri = "",
+                    modifier = Modifier.padding(bottom = 32.dp)
+                )
             }
             item("work in progress") {
                 Column(

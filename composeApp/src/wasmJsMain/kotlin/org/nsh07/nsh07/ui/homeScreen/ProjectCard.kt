@@ -28,8 +28,8 @@ fun ProjectCard(
     project: Repo,
     cardPadding: Dp,
     projectImageUri: String,
-    projectDescription: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    projectDescription: String? = null
 ) {
     val colorScheme = colorScheme
     val uriHandler = LocalUriHandler.current
@@ -56,7 +56,7 @@ fun ProjectCard(
                     )
                 }
                 Text(
-                    projectDescription,
+                    projectDescription ?: project.description,
                     style = typography.bodyMedium,
                     color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp)

@@ -1,4 +1,4 @@
-package org.nsh07.nsh07.ui.network
+package org.nsh07.nsh07.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

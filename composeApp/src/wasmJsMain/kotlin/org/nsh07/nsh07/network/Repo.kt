@@ -1,4 +1,4 @@
-package org.nsh07.nsh07.ui.network
+package org.nsh07.nsh07.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -105,8 +105,6 @@ data class Repo(
     val mergesUrl: String,
     @SerialName("milestones_url")
     val milestonesUrl: String,
-    @SerialName("mirror_url")
-    val mirrorUrl: Any?,
     @SerialName("name")
     val name: String,
     @SerialName("node_id")
