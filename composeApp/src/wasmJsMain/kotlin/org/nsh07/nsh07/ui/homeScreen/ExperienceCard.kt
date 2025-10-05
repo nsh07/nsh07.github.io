@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
@@ -27,6 +28,7 @@ import org.jetbrains.compose.resources.painterResource
 import kotlin.text.Typography.bullet
 import kotlin.text.Typography.mdash
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ExperienceCard(
     experience: Experience,
@@ -38,7 +40,7 @@ fun ExperienceCard(
 
     Box(
         modifier
-            .clip(shapes.large)
+            .clip(shapes.largeIncreased)
             .clickable { uriHandler.openUri(experience.companyUrl) }
     ) {
         Row(Modifier.fillMaxWidth().padding(cardPadding)) {

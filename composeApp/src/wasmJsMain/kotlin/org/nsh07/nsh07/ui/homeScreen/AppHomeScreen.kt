@@ -185,7 +185,7 @@ fun AppHomeScreen(
                         .padding(start = cardPadding)
                         .clickable { uriHandler.openUri("https://www.linkedin.com/in/nsh07/") }
                 ) {
-                    Text("View LinkedIn Profile ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                    Text("View LinkedIn profile ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
                     Icon(painterResource(Res.drawable.open_in_browser), null, Modifier.size(16.dp))
                 }
                 Spacer(Modifier.height(112.dp))
@@ -194,9 +194,20 @@ fun AppHomeScreen(
                 ProjectCard(
                     project = it,
                     cardPadding = cardPadding,
-                    projectImageUri = "",
                     modifier = Modifier.padding(bottom = 32.dp)
                 )
+            }
+            item("github link text") {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(start = cardPadding)
+                        .clickable { uriHandler.openUri("https://github.com/nsh07") }
+                ) {
+                    Text("View all projects on GitHub ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                    Icon(painterResource(Res.drawable.open_in_browser), null, Modifier.size(16.dp))
+                }
+                Spacer(Modifier.height(112.dp))
             }
             item("work in progress") {
                 Column(

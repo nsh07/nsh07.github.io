@@ -23,7 +23,7 @@ class GitHubApiClient(
                 parameter("q", "user:$username")
                 parameter("sort", "stars")
                 parameter("order", "desc")
-                parameter("per_page", "5")
+                parameter("per_page", "3")
             }
         } catch (_: UnresolvedAddressException) {
             return Result.Error(NetworkError.NO_INTERNET)
