@@ -75,61 +75,60 @@ fun AppHomeScreen(
             .widthIn(max = 1200.dp)
             .then(modifier)
     ) {
-        Column(Modifier.padding(vertical = 96.dp).weight(1f).verticalScroll(rememberScrollState())) {
-            Text(
-                "Nishant Mishra",
-                style = typography.displayLarge.copy(fontSize = 48.sp),
-                color = colorScheme.onSurface
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                "App developer",
-                style = typography.titleLarge,
-                color = colorScheme.onSurface
-            )
-            Spacer(Modifier.height(20.dp))
-            Text(
-                "I build performant, beautiful apps for mobile and desktop.",
-                style = typography.bodyLarge,
-                color = colorScheme.onSurfaceVariant,
-                modifier = Modifier.widthIn(max = 320.dp)
-            )
+        Column(Modifier.padding(vertical = 96.dp).weight(1f)) {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                Text(
+                    "Nishant Mishra",
+                    style = typography.displayLarge.copy(fontSize = 48.sp),
+                    color = colorScheme.onSurface
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "App developer",
+                    style = typography.titleLarge,
+                    color = colorScheme.onSurface
+                )
+                Spacer(Modifier.height(20.dp))
+                Text(
+                    "I build performant, beautiful apps for mobile and desktop.",
+                    style = typography.bodyLarge,
+                    color = colorScheme.onSurfaceVariant,
+                    modifier = Modifier.widthIn(max = 320.dp)
+                )
 
-            Spacer(Modifier.height(72.dp))
+                Spacer(Modifier.height(72.dp))
 
-            NavigationItem(
-                selected = firstVisibleItem < paragraphCount + 1,
-                onClick = {
-                    scope.launch { listState.animateScrollToItem(0) }
-                },
-                label = { Text("About", style = typography.bodyMedium) },
-                modifier = Modifier.offset(x = (-20).dp)
-            )
-            NavigationItem(
-                selected = firstVisibleItem in paragraphCount + 1..<paragraphCount + experienceCount + 2,
-                onClick = {
-                    scope.launch { listState.animateScrollToItem(paragraphCount + 1) }
-                },
-                label = { Text("Experience", style = typography.bodyMedium) },
-                modifier = Modifier.offset(x = (-20).dp)
-            )
-            NavigationItem(
-                selected = firstVisibleItem >= paragraphCount + experienceCount + 2,
-                onClick = {
-                    scope.launch { listState.animateScrollToItem(paragraphCount + experienceCount + 2) }
-                },
-                label = { Text("Projects", style = typography.bodyMedium) },
-                modifier = Modifier.offset(x = (-20).dp)
-            )
+                NavigationItem(
+                    selected = firstVisibleItem < paragraphCount + 1,
+                    onClick = {
+                        scope.launch { listState.animateScrollToItem(0) }
+                    },
+                    label = { Text("About", style = typography.bodyMedium) },
+                    modifier = Modifier.offset(x = (-20).dp)
+                )
+                NavigationItem(
+                    selected = firstVisibleItem in paragraphCount + 1..<paragraphCount + experienceCount + 2,
+                    onClick = {
+                        scope.launch { listState.animateScrollToItem(paragraphCount + 1) }
+                    },
+                    label = { Text("Experience", style = typography.bodyMedium) },
+                    modifier = Modifier.offset(x = (-20).dp)
+                )
+                NavigationItem(
+                    selected = firstVisibleItem >= paragraphCount + experienceCount + 2,
+                    onClick = {
+                        scope.launch { listState.animateScrollToItem(paragraphCount + experienceCount + 2) }
+                    },
+                    label = { Text("Projects", style = typography.bodyMedium) },
+                    modifier = Modifier.offset(x = (-20).dp)
+                )
+
+                Spacer(Modifier.height(32.dp))
+            }
 
             Spacer(Modifier.weight(1f))
 
-            Spacer(Modifier.padding(top = 32.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { uriHandler.openUri("https://github.com/nsh07") }) {
                     Icon(
                         painterResource(Res.drawable.github),
