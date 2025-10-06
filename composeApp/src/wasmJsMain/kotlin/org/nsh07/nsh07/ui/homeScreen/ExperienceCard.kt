@@ -27,6 +27,7 @@ import nsh07.composeapp.generated.resources.open_in_browser
 import org.jetbrains.compose.resources.painterResource
 import kotlin.text.Typography.bullet
 import kotlin.text.Typography.mdash
+import kotlin.text.Typography.nbsp
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -45,7 +46,14 @@ fun ExperienceCard(
     ) {
         Row(Modifier.fillMaxWidth().padding(cardPadding)) {
             Text(
-                remember { "${experience.start} $mdash ${experience.end}".toUpperCase(Locale.current) },
+                remember {
+                    "${experience.start.replace(' ', nbsp)} $mdash ${
+                        experience.end.replace(
+                            ' ',
+                            nbsp
+                        )
+                    }".toUpperCase(Locale.current)
+                },
                 style = typography.labelMedium,
                 color = colorScheme.outline,
                 modifier = Modifier.padding(top = 4.dp, end = 16.dp).weight(1f)

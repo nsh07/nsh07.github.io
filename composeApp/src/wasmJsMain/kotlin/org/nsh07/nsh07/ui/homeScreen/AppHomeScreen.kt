@@ -7,11 +7,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +22,7 @@ import kotlinx.coroutines.launch
 import nsh07.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppHomeScreen(
     projectState: ProjectsState,
@@ -189,11 +188,17 @@ fun AppHomeScreen(
                 }
                 Spacer(Modifier.height(112.dp))
             }
-            items(projectState.projects, key = { it.id }) {
-                ProjectCard(
-                    project = it,
-                    cardPadding = cardPadding,
-                    modifier = Modifier.padding(bottom = 32.dp)
+            if (!projectState.isLoading)
+                items(projectState.projects, key = { it.id }) {
+                    ProjectCard(
+                        project = it,
+                        cardPadding = cardPadding,
+                        modifier = Modifier.padding(bottom = 32.dp)
+                    )
+                }
+            else item {
+                LinearWavyProgressIndicator(
+                    Modifier.fillMaxWidth().padding(cardPadding).padding(bottom = 32.dp)
                 )
             }
             item("github link text") {
