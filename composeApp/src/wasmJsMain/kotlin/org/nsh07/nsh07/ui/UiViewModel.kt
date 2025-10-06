@@ -1,13 +1,17 @@
 package org.nsh07.nsh07.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.nsh07.nsh07.network.GitHubApiClient
+import org.nsh07.nsh07.network.createHttpClient
 import org.nsh07.nsh07.ui.homeScreen.ProjectsState
 import org.nsh07.nsh07.util.onError
 import org.nsh07.nsh07.util.onSuccess
@@ -45,4 +49,14 @@ class UiViewModel(
                 }
         }
     }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val client = GitHubApiClient(createHttpClient())
+                UiViewModel(client)
+            }
+        }
+    }
+
 }

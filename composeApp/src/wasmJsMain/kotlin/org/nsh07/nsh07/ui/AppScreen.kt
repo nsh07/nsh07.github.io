@@ -4,16 +4,14 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import org.nsh07.nsh07.network.GitHubApiClient
-import org.nsh07.nsh07.network.createHttpClient
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.nsh07.nsh07.ui.homeScreen.AppHomeScreen
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AppScreen(
-    viewModel: UiViewModel = remember { UiViewModel(GitHubApiClient(createHttpClient())) },
+    viewModel: UiViewModel = viewModel(factory = UiViewModel.Factory),
     modifier: Modifier = Modifier
 ) {
     val projectsState by viewModel.projectsState.collectAsState()
