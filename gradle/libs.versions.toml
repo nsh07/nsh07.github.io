@@ -5,13 +5,14 @@ composeMultiplatform = "1.10.0-alpha02"
 kotlin = "2.2.20"
 ksp = "2.2.20-2.0.4"
 ktor = "3.3.1"
+material3-adaptive = "1.2.0-alpha07"
 
 [libraries]
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 coil-kt = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil-kt-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
-compose-material3-windowsizeclass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "composeMultiplatform" }
+compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "material3-adaptive" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }

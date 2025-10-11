@@ -21,31 +21,36 @@ import nsh07.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun NameAndDesc() {
+fun NameAndDesc(horizontalPadding: Dp = 0.dp) {
     Text(
         "Nishant Mishra",
         style = typography.displayLarge.copy(fontSize = 48.sp),
-        color = colorScheme.onSurface
+        color = colorScheme.onSurface,
+        modifier = Modifier.padding(horizontal = horizontalPadding)
     )
     Spacer(Modifier.height(4.dp))
     Text(
         "App developer",
         style = typography.titleLarge,
-        color = colorScheme.onSurface
+        color = colorScheme.onSurface,
+        modifier = Modifier.padding(horizontal = horizontalPadding)
     )
     Spacer(Modifier.height(20.dp))
     Text(
         "I build performant, beautiful apps for mobile and desktop.",
         style = typography.bodyLarge,
         color = colorScheme.onSurfaceVariant,
-        modifier = Modifier.widthIn(max = 320.dp)
+        modifier = Modifier.widthIn(max = 320.dp).padding(horizontal = horizontalPadding)
     )
 }
 
 @Composable
-fun SocialIcons() {
+fun SocialIcons(modifier: Modifier = Modifier) {
     val uriHandler = LocalUriHandler.current
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
         IconButton(onClick = { uriHandler.openUri("https://github.com/nsh07") }) {
             Icon(
                 painterResource(Res.drawable.github),
@@ -151,8 +156,8 @@ fun LazyListScope.mainContent(
     }
     item("tech stack spacer") { Spacer(Modifier.height(112.dp)) }
     item("tech stack") {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        FlowRow(
+            itemVerticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(horizontal = cardPadding)
         ) {
             Text(
@@ -175,7 +180,8 @@ fun LazyListScope.mainContent(
                 null,
                 modifier = Modifier.clickable { uriHandler.openUri("https://www.jetbrains.com/compose-multiplatform/") }
             )
-            Text(" in Kotlin. Deployed with ", style = typography.bodyMedium, color = colorScheme.outline)
+            Text(" in Kotlin. ", style = typography.bodyMedium, color = colorScheme.outline)
+            Text("Deployed with ", style = typography.bodyMedium, color = colorScheme.outline)
             Icon(
                 painterResource(Res.drawable.githubpages),
                 null,

@@ -1,20 +1,24 @@
 package org.nsh07.nsh07.ui.homeScreen
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import androidx.window.core.layout.WindowSizeClass
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AppHomeScreen(
     projectState: ProjectsState,
@@ -22,9 +26,11 @@ fun AppHomeScreen(
 ) {
     val uriHandler = LocalUriHandler.current
     val scope = rememberCoroutineScope()
+    val motionScheme = motionScheme
 
     val listState = rememberLazyListState()
     val firstVisibleItem by derivedStateOf { listState.firstVisibleItemIndex }
+    val scrolledUp by derivedStateOf { listState.lastScrolledForward }
 
     val paragraphs = remember {
         listOf(
@@ -40,7 +46,7 @@ fun AppHomeScreen(
                 start = "Aug 2025",
                 end = "Present",
                 position = "Open Source Lead",
-                description = "Perform the role of Open Source Lead of the Development Club. Helped successfully organise OPCODE (Open Source Fest) 2025.",
+                description = "Perform the role of Open Source Lead of the Development Club. Successfully organised OPCODE (Open Source Fest) 2025, while also contributing a project.",
                 company = "DevC, IIIT Bhagalpur",
                 companyUrl = "https://gymkhana.iiitbh.ac.in/technical/",
                 skills = listOf()
@@ -60,63 +66,137 @@ fun AppHomeScreen(
 
     val cardPadding = remember { 16.dp }
 
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 48.dp)
-            .widthIn(max = 1200.dp)
-            .then(modifier)
-    ) {
-        Column(Modifier.padding(vertical = 96.dp).weight(1f)) {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                NameAndDesc()
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
 
-                Spacer(Modifier.height(72.dp))
+    if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 48.dp)
+                .widthIn(max = 1200.dp)
+                .then(modifier)
+        ) {
+            Column(Modifier.padding(vertical = 96.dp).weight(1f)) {
+                Column(Modifier.verticalScroll(rememberScrollState())) {
+                    NameAndDesc()
 
-                NavigationItem(
-                    selected = firstVisibleItem < paragraphCount + 1,
-                    onClick = {
-                        scope.launch { listState.animateScrollToItem(0) }
-                    },
-                    label = { Text("About", style = typography.bodyMedium) },
-                    modifier = Modifier.offset(x = (-20).dp)
-                )
-                NavigationItem(
-                    selected = firstVisibleItem in paragraphCount + 1..<paragraphCount + experienceCount + 2,
-                    onClick = {
-                        scope.launch { listState.animateScrollToItem(paragraphCount + 1) }
-                    },
-                    label = { Text("Experience", style = typography.bodyMedium) },
-                    modifier = Modifier.offset(x = (-20).dp)
-                )
-                NavigationItem(
-                    selected = firstVisibleItem >= paragraphCount + experienceCount + 2,
-                    onClick = {
-                        scope.launch { listState.animateScrollToItem(paragraphCount + experienceCount + 2) }
-                    },
-                    label = { Text("Projects", style = typography.bodyMedium) },
-                    modifier = Modifier.offset(x = (-20).dp)
-                )
+                    Spacer(Modifier.height(72.dp))
 
-                Spacer(Modifier.height(32.dp))
+                    NavigationItem(
+                        selected = firstVisibleItem < paragraphCount + 1,
+                        onClick = {
+                            scope.launch { listState.animateScrollToItem(0) }
+                        },
+                        label = { Text("About", style = typography.bodyMedium) },
+                        modifier = Modifier.offset(x = (-20).dp)
+                    )
+                    NavigationItem(
+                        selected = firstVisibleItem in paragraphCount + 1..<paragraphCount + experienceCount + 2,
+                        onClick = {
+                            scope.launch { listState.animateScrollToItem(paragraphCount + 1) }
+                        },
+                        label = { Text("Experience", style = typography.bodyMedium) },
+                        modifier = Modifier.offset(x = (-20).dp)
+                    )
+                    NavigationItem(
+                        selected = firstVisibleItem >= paragraphCount + experienceCount + 2,
+                        onClick = {
+                            scope.launch { listState.animateScrollToItem(paragraphCount + experienceCount + 2) }
+                        },
+                        label = { Text("Projects", style = typography.bodyMedium) },
+                        modifier = Modifier.offset(x = (-20).dp)
+                    )
+
+                    Spacer(Modifier.height(32.dp))
+                }
+
+                Spacer(Modifier.weight(1f))
+
+                SocialIcons()
             }
 
-            Spacer(Modifier.weight(1f))
-
-            SocialIcons()
+            LazyColumn(
+                state = listState,
+                contentPadding = PaddingValues(vertical = 96.dp),
+                modifier = Modifier.fillMaxHeight().weight(1.1f)
+            ) {
+                mainContent(
+                    paragraphs,
+                    experiences,
+                    projectState,
+                    cardPadding,
+                    uriHandler
+                )
+            }
         }
-
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(vertical = 96.dp),
-            modifier = Modifier.fillMaxHeight().weight(1.1f)
-        ) {
-            mainContent(
-                paragraphs,
-                experiences,
-                projectState,
-                cardPadding,
-                uriHandler
-            )
+    } else {
+        Scaffold(
+            topBar = {
+                AnimatedVisibility(
+                    firstVisibleItem > 1,
+                    enter = slideInVertically(motionScheme.defaultSpatialSpec(), initialOffsetY = { -it }),
+                    exit = slideOutVertically(motionScheme.defaultSpatialSpec(), targetOffsetY = { -it })
+                ) {
+                    val topBarContent = when (firstVisibleItem) {
+                        in paragraphCount + 2..<paragraphCount + experienceCount + 3 -> 1
+                        in paragraphCount + experienceCount + 3..1000 -> 2
+                        else -> 0
+                    }
+                    TopAppBar(
+                        title = {
+                            AnimatedContent(
+                                topBarContent,
+                                transitionSpec = {
+                                    slideInVertically(
+                                        animationSpec = motionScheme.fastSpatialSpec(),
+                                        initialOffsetY = {
+                                            if (scrolledUp) (it * 1.25).toInt() else (-it * 1.25).toInt()
+                                        }
+                                    ).togetherWith(
+                                        slideOutVertically(
+                                            animationSpec = motionScheme.fastSpatialSpec(),
+                                            targetOffsetY = {
+                                                if (scrolledUp) (-it * 1.25).toInt() else (it * 1.25).toInt()
+                                            }
+                                        )
+                                    )
+                                },
+                                modifier = Modifier.width(200.dp).padding(start = 8.dp)
+                            ) {
+                                when (it) {
+                                    1 -> Text("Experience")
+                                    2 -> Text("Projects")
+                                    else -> Text("About")
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        ) { innerPadding ->
+            val layoutDirection = LocalLayoutDirection.current
+            LazyColumn(
+                state = listState,
+                contentPadding = PaddingValues(
+                    top = 48.dp,
+                    start = innerPadding.calculateStartPadding(layoutDirection),
+                    end = innerPadding.calculateEndPadding(layoutDirection),
+                    bottom = 48.dp
+                ),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+            ) {
+                item { NameAndDesc(horizontalPadding = 16.dp) }
+                item {
+                    SocialIcons(Modifier.padding(top = 32.dp, start = 12.dp, end = 12.dp))
+                    Spacer(Modifier.height(96.dp))
+                }
+                mainContent(
+                    paragraphs,
+                    experiences,
+                    projectState,
+                    cardPadding,
+                    uriHandler
+                )
+            }
         }
     }
 }

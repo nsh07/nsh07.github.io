@@ -36,7 +36,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(libs.compose.material3.windowsizeclass)
+            implementation(libs.compose.material3.adaptive)
             implementation(libs.coil.kt)
             implementation(libs.coil.kt.ktor)
             implementation(compose.ui)
