@@ -34,9 +34,10 @@ import kotlin.text.Typography.nbsp
 fun ExperienceCard(
     experience: Experience,
     cardPadding: Dp,
+    wide: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val colorScheme = colorScheme
+    colorScheme
     val uriHandler = LocalUriHandler.current
 
     Box(
@@ -44,40 +45,57 @@ fun ExperienceCard(
             .clip(shapes.largeIncreased)
             .clickable { uriHandler.openUri(experience.companyUrl) }
     ) {
-        Row(Modifier.fillMaxWidth().padding(cardPadding)) {
-            Text(
-                remember {
-                    "${experience.start.replace(' ', nbsp)} $mdash ${
-                        experience.end.replace(
-                            ' ',
-                            nbsp
-                        )
-                    }".toUpperCase(Locale.current)
-                },
-                style = typography.labelMedium,
-                color = colorScheme.outline,
-                modifier = Modifier.padding(top = 4.dp, end = 16.dp).weight(1f)
-            )
-            Column(Modifier.weight(3f)) {
-                FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
-                    Text(experience.position, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
-                    Text(" $bullet ", style = typography.bodyLarge, fontWeight = FontWeight.Medium)
-                    Text(experience.company, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
-                    Icon(
-                        painterResource(Res.drawable.open_in_browser),
-                        null,
-                        modifier = Modifier.padding(start = 4.dp).size(16.dp)
-                    )
-                }
-                Text(
-                    experience.description,
-                    style = typography.bodyMedium,
-                    color = colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-                if (experience.skills.isNotEmpty()) LabelRow(experience.skills, Modifier.padding(top = 16.dp))
+        if (wide) {
+            Row(Modifier.fillMaxWidth().padding(cardPadding)) {
+                ExperienceCardDurationText(experience, Modifier.weight(1f))
+                ExperienceCardMainContent(experience, Modifier.weight(3f))
+            }
+        } else {
+            Column(Modifier.fillMaxWidth().padding(cardPadding)) {
+                ExperienceCardDurationText(experience)
+                ExperienceCardMainContent(experience)
             }
         }
+    }
+}
+
+@Composable
+fun ExperienceCardDurationText(experience: Experience, modifier: Modifier = Modifier) {
+    Text(
+        remember {
+            "${experience.start.replace(' ', nbsp)} $mdash ${
+                experience.end.replace(
+                    ' ',
+                    nbsp
+                )
+            }".toUpperCase(Locale.current)
+        },
+        style = typography.labelMedium,
+        color = colorScheme.outline,
+        modifier = Modifier.padding(top = 4.dp, bottom = 8.dp, end = 16.dp).then(modifier)
+    )
+}
+
+@Composable
+fun ExperienceCardMainContent(experience: Experience, modifier: Modifier = Modifier) {
+    Column(modifier) {
+        FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
+            Text(experience.position, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Text(" $bullet ", style = typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Text(experience.company, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Icon(
+                painterResource(Res.drawable.open_in_browser),
+                null,
+                modifier = Modifier.padding(start = 4.dp).size(16.dp)
+            )
+        }
+        Text(
+            experience.description,
+            style = typography.bodyMedium,
+            color = colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+        if (experience.skills.isNotEmpty()) LabelRow(experience.skills, Modifier.padding(top = 16.dp))
     }
 }
 

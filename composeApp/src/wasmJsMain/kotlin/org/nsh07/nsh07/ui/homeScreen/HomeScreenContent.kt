@@ -89,6 +89,7 @@ fun LazyListScope.mainContent(
     projectState: ProjectsState,
     cardPadding: Dp,
     uriHandler: UriHandler,
+    wide: Boolean,
     topPadding: Dp = 0.dp
 ) {
     items(paragraphs, key = { it.substring(0, 16) }) {
@@ -102,7 +103,12 @@ fun LazyListScope.mainContent(
     }
     item("experience spacer") { Spacer(Modifier.height(112.dp)) }
     items(experiences, key = { it.start }) {
-        ExperienceCard(experience = it, cardPadding = cardPadding, modifier = Modifier.padding(bottom = 32.dp))
+        ExperienceCard(
+            experience = it,
+            cardPadding = cardPadding,
+            wide = wide,
+            modifier = Modifier.padding(bottom = 32.dp)
+        )
     }
     item("linkedin link text") {
         Row(

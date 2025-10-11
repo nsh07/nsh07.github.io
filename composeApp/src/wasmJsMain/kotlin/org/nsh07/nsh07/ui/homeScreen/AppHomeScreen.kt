@@ -134,7 +134,8 @@ fun AppHomeScreen(
                     experiences,
                     projectState,
                     cardPadding,
-                    uriHandler
+                    uriHandler,
+                    wide = true
                 )
             }
         }
@@ -237,6 +238,7 @@ fun AppHomeScreen(
                     projectState,
                     cardPadding,
                     uriHandler,
+                    wide = false,
                     topPadding = 96.dp
                 )
             }
