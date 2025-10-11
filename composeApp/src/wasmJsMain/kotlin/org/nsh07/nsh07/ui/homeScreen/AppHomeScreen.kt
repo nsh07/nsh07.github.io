@@ -1,21 +1,31 @@
 package org.nsh07.nsh07.ui.homeScreen
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
@@ -129,6 +139,24 @@ fun AppHomeScreen(
             }
         }
     } else {
+        val scrollBehavior = pinnedScrollBehavior()
+        val hazeState = rememberHazeState(true)
+        val topAppBarColors = topAppBarColors(
+            containerColor = colorScheme.surface,
+            scrolledContainerColor = colorScheme.surface
+        )
+
+        val targetColor by remember(scrollBehavior) {
+            derivedStateOf {
+                val overlappingFraction = scrollBehavior.state.overlappedFraction
+                lerp(
+                    topAppBarColors.containerColor,
+                    topAppBarColors.scrolledContainerColor,
+                    FastOutLinearInEasing.transform(if (overlappingFraction > 0.01f) 1f else 0f),
+                )
+            }
+        }
+
         Scaffold(
             topBar = {
                 AnimatedVisibility(
@@ -168,10 +196,27 @@ fun AppHomeScreen(
                                     else -> Text("About")
                                 }
                             }
-                        }
+                        },
+                        scrollBehavior = scrollBehavior,
+                        colors = topAppBarColors.copy(
+                            scrolledContainerColor = topAppBarColors.scrolledContainerColor.copy(
+                                0.7f
+                            )
+                        ),
+                        modifier = Modifier
+                            .hazeEffect(
+                                hazeState,
+                                style = HazeStyle(
+                                    backgroundColor = targetColor,
+                                    tint = null,
+                                    blurRadius = 20.dp,
+                                    noiseFactor = 0f
+                                )
+                            )
                     )
                 }
-            }
+            },
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
         ) { innerPadding ->
             val layoutDirection = LocalLayoutDirection.current
             LazyColumn(
@@ -182,19 +227,17 @@ fun AppHomeScreen(
                     end = innerPadding.calculateEndPadding(layoutDirection),
                     bottom = 48.dp
                 ),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).hazeSource(hazeState)
             ) {
                 item { NameAndDesc(horizontalPadding = 16.dp) }
-                item {
-                    SocialIcons(Modifier.padding(top = 32.dp, start = 12.dp, end = 12.dp))
-                    Spacer(Modifier.height(96.dp))
-                }
+                item { SocialIcons(Modifier.padding(top = 32.dp, start = 12.dp, end = 12.dp)) }
                 mainContent(
                     paragraphs,
                     experiences,
                     projectState,
                     cardPadding,
-                    uriHandler
+                    uriHandler,
+                    topPadding = 96.dp
                 )
             }
         }
