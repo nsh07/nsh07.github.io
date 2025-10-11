@@ -161,8 +161,8 @@ fun AppHomeScreen(
             topBar = {
                 AnimatedVisibility(
                     firstVisibleItem > 1,
-                    enter = slideInVertically(motionScheme.defaultSpatialSpec(), initialOffsetY = { -it }),
-                    exit = slideOutVertically(motionScheme.defaultSpatialSpec(), targetOffsetY = { -it })
+                    enter = slideInVertically(motionScheme.slowSpatialSpec(), initialOffsetY = { -it }),
+                    exit = slideOutVertically(motionScheme.slowSpatialSpec(), targetOffsetY = { -it })
                 ) {
                     val topBarContent = when (firstVisibleItem) {
                         in paragraphCount + 2..<paragraphCount + experienceCount + 3 -> 1
