@@ -190,13 +190,20 @@ fun LazyListScope.mainContent(
                 modifier = Modifier.clickable { uriHandler.openUri("https://www.jetbrains.com/compose-multiplatform/") }
             )
             Text(" in Kotlin. ", style = typography.bodyMedium, color = colorScheme.outline)
-            Text("Deployed with ", style = typography.bodyMedium, color = colorScheme.outline)
-            Icon(
-                painterResource(Res.drawable.githubpages),
-                null,
-                modifier = Modifier
-                    .height(20.dp)
-                    .clickable { uriHandler.openUri("https://pages.github.com/") }
+            Text(
+                buildAnnotatedString {
+                    append("Deployed with ")
+                    withLink(
+                        LinkAnnotation.Url(
+                            url = "https://www.jetbrains.com/compose-multiplatform/",
+                            styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
+                        )
+                    ) {
+                        append("GitHub Pages.")
+                    }
+                },
+                style = typography.bodyMedium,
+                color = colorScheme.outline
             )
             Text(".", style = typography.bodyMedium, color = colorScheme.outline)
         }
