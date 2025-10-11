@@ -127,6 +127,7 @@ fun LazyListScope.mainContent(
             ProjectCard(
                 project = it,
                 cardPadding = cardPadding,
+                wide = wide,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
         }
