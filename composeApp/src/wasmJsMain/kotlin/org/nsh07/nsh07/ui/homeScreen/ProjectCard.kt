@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import nsh07.composeapp.generated.resources.Res
+import nsh07.composeapp.generated.resources.fork
 import nsh07.composeapp.generated.resources.open_in_browser
 import nsh07.composeapp.generated.resources.star
 import org.jetbrains.compose.resources.painterResource
@@ -84,6 +85,13 @@ fun ProjectCard(
                         null
                     )
                     Text(project.stargazersCount.toString(), style = typography.labelLarge)
+                    Spacer(Modifier.width(8.dp))
+                    Icon(
+                        painterResource(Res.drawable.fork),
+                        null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Text(project.forksCount.toString(), style = typography.labelLarge)
                 }
                 LabelRow(project.topics, Modifier.padding(top = 16.dp))
             }
