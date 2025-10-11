@@ -88,9 +88,11 @@ fun LazyListScope.mainContent(
     experiences: List<Experience>,
     projectState: ProjectsState,
     cardPadding: Dp,
-    uriHandler: UriHandler
+    uriHandler: UriHandler,
+    topPadding: Dp = 0.dp
 ) {
     items(paragraphs, key = { it.substring(0, 16) }) {
+        Spacer(Modifier.height(topPadding))
         Text(
             it,
             style = typography.bodyLarge,
