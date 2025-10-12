@@ -251,7 +251,6 @@ fun LazyListScope.mainContent(
                 style = typography.bodyMedium,
                 color = colorScheme.outline
             )
-            Text(".", style = typography.bodyMedium, color = colorScheme.outline)
         }
         Text(
             buildAnnotatedString {

@@ -1,7 +1,6 @@
 package org.nsh07.nsh07.ui.homeScreen
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -16,7 +15,6 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
@@ -155,17 +153,6 @@ fun AppHomeScreen(
             scrolledContainerColor = colorScheme.surface
         )
 
-        val targetColor by remember(scrollBehavior) {
-            derivedStateOf {
-                val overlappingFraction = scrollBehavior.state.overlappedFraction
-                lerp(
-                    topAppBarColors.containerColor,
-                    topAppBarColors.scrolledContainerColor,
-                    FastOutLinearInEasing.transform(if (overlappingFraction > 0.01f) 1f else 0f),
-                )
-            }
-        }
-
         Scaffold(
             topBar = {
                 AnimatedVisibility(
@@ -216,7 +203,7 @@ fun AppHomeScreen(
                             .hazeEffect(
                                 hazeState,
                                 style = HazeStyle(
-                                    backgroundColor = targetColor,
+                                    backgroundColor = colorScheme.surface,
                                     tint = null,
                                     blurRadius = 20.dp,
                                     noiseFactor = 0f
