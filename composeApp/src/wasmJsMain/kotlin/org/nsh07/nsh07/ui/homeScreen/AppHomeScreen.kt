@@ -39,8 +39,6 @@ fun AppHomeScreen(
     val motionScheme = motionScheme
 
     val listState = rememberLazyListState()
-    val firstVisibleItem by derivedStateOf { listState.firstVisibleItemIndex }
-    val scrolledUp by derivedStateOf { listState.lastScrolledForward }
 
     val paragraphs = remember {
         listOf(
@@ -74,11 +72,15 @@ fun AppHomeScreen(
     }
     val experienceCount = remember { experiences.size }
 
-    val cardPadding = remember { 16.dp }
+    val cardPadding = 16.dp
 
     val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
 
     if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)) {
+        val aboutSectionVisible by remember { derivedStateOf { listState.firstVisibleItemIndex < paragraphCount + 1 } }
+        val experienceSectionVisible by remember { derivedStateOf { listState.firstVisibleItemIndex in paragraphCount + 1..<paragraphCount + experienceCount + 2 } }
+        val projectsSectionVisible by remember { derivedStateOf { listState.firstVisibleItemIndex >= paragraphCount + experienceCount + 2 } }
+
         Row(
             modifier = Modifier
                 .padding(horizontal = 48.dp)
@@ -92,7 +94,7 @@ fun AppHomeScreen(
                     Spacer(Modifier.height(72.dp))
 
                     NavigationItem(
-                        selected = firstVisibleItem < paragraphCount + 1,
+                        selected = aboutSectionVisible,
                         onClick = {
                             scope.launch { listState.animateScrollToItem(0) }
                         },
@@ -100,7 +102,7 @@ fun AppHomeScreen(
                         modifier = Modifier.offset(x = (-20).dp)
                     )
                     NavigationItem(
-                        selected = firstVisibleItem in paragraphCount + 1..<paragraphCount + experienceCount + 2,
+                        selected = experienceSectionVisible,
                         onClick = {
                             scope.launch { listState.animateScrollToItem(paragraphCount + 1) }
                         },
@@ -108,7 +110,7 @@ fun AppHomeScreen(
                         modifier = Modifier.offset(x = (-20).dp)
                     )
                     NavigationItem(
-                        selected = firstVisibleItem >= paragraphCount + experienceCount + 2,
+                        selected = projectsSectionVisible,
                         onClick = {
                             scope.launch { listState.animateScrollToItem(paragraphCount + experienceCount + 2) }
                         },
@@ -140,6 +142,12 @@ fun AppHomeScreen(
             }
         }
     } else {
+        val scrolledUp by derivedStateOf { listState.lastScrolledForward }
+
+        val showTopBar by remember { derivedStateOf { listState.firstVisibleItemIndex > 1 } }
+        val experienceSectionVisible by remember { derivedStateOf { listState.firstVisibleItemIndex in paragraphCount + 2..<paragraphCount + experienceCount + 3 } }
+        val projectsSectionsVisible by remember { derivedStateOf { listState.firstVisibleItemIndex in paragraphCount + experienceCount + 3..1000 } }
+
         val scrollBehavior = pinnedScrollBehavior()
         val hazeState = rememberHazeState(true)
         val topAppBarColors = topAppBarColors(
@@ -161,13 +169,13 @@ fun AppHomeScreen(
         Scaffold(
             topBar = {
                 AnimatedVisibility(
-                    firstVisibleItem > 1,
+                    showTopBar,
                     enter = slideInVertically(motionScheme.slowSpatialSpec(), initialOffsetY = { -it }),
                     exit = slideOutVertically(motionScheme.slowSpatialSpec(), targetOffsetY = { -it })
                 ) {
-                    val topBarContent = when (firstVisibleItem) {
-                        in paragraphCount + 2..<paragraphCount + experienceCount + 3 -> 1
-                        in paragraphCount + experienceCount + 3..1000 -> 2
+                    val topBarContent = when {
+                        experienceSectionVisible -> 1
+                        projectsSectionsVisible -> 2
                         else -> 0
                     }
                     TopAppBar(
