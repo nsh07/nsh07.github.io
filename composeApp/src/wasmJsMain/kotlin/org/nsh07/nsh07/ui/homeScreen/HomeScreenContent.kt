@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -92,8 +93,8 @@ fun LazyListScope.mainContent(
     wide: Boolean,
     topPadding: Dp = 0.dp
 ) {
-    items(paragraphs, key = { it.substring(0, 16) }) {
-        Spacer(Modifier.height(topPadding))
+    itemsIndexed(paragraphs, key = { _: Int, it: String -> it.take(16) }) { index: Int, it: String ->
+        if (index == 0) Spacer(Modifier.height(topPadding))
         Text(
             it,
             style = typography.bodyLarge,
