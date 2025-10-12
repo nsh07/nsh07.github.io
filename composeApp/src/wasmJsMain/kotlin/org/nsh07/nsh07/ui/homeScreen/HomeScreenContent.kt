@@ -1,6 +1,7 @@
 package org.nsh07.nsh07.ui.homeScreen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -9,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -45,41 +47,84 @@ fun NameAndDesc(horizontalPadding: Dp = 0.dp) {
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SocialIcons(modifier: Modifier = Modifier) {
     val uriHandler = LocalUriHandler.current
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    val interactionSources = remember { List(4) { MutableInteractionSource() } }
+    ButtonGroup(
+        overflowIndicator = {},
+        horizontalArrangement = Arrangement.Start,
         modifier = modifier
     ) {
-        IconButton(onClick = { uriHandler.openUri("https://github.com/nsh07") }) {
-            Icon(
-                painterResource(Res.drawable.github),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
-        IconButton(onClick = { uriHandler.openUri("https://gitlab.com/nsh07") }) {
-            Icon(
-                painterResource(Res.drawable.gitlab),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
-        IconButton(onClick = { uriHandler.openUri("https://www.linkedin.com/in/nsh07/") }) {
-            Icon(
-                painterResource(Res.drawable.linkedin),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
-        IconButton(onClick = { uriHandler.openUri("mailto:nishant.28@outlook.com") }) {
-            Icon(
-                painterResource(Res.drawable.email),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
+        customItem(
+            buttonGroupContent = {
+                IconButton(
+                    onClick = { uriHandler.openUri("https://github.com/nsh07") },
+                    interactionSource = interactionSources[0],
+                    shapes = IconButtonDefaults.shapes(),
+                    modifier = Modifier.width(52.dp).animateWidth(interactionSources[0])
+                ) {
+                    Icon(
+                        painterResource(Res.drawable.github),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            },
+            menuContent = {}
+        )
+        customItem(
+            buttonGroupContent = {
+                IconButton(
+                    onClick = { uriHandler.openUri("https://gitlab.com/nsh07") },
+                    interactionSource = interactionSources[1],
+                    shapes = IconButtonDefaults.shapes(),
+                    modifier = Modifier.width(52.dp).animateWidth(interactionSources[1])
+                ) {
+                    Icon(
+                        painterResource(Res.drawable.gitlab),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            },
+            menuContent = {}
+        )
+        customItem(
+            buttonGroupContent = {
+                IconButton(
+                    onClick = { uriHandler.openUri("https://www.linkedin.com/in/nsh07/") },
+                    interactionSource = interactionSources[2],
+                    shapes = IconButtonDefaults.shapes(),
+                    modifier = Modifier.width(52.dp).animateWidth(interactionSources[2])
+                ) {
+                    Icon(
+                        painterResource(Res.drawable.linkedin),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            },
+            menuContent = {}
+        )
+        customItem(
+            buttonGroupContent = {
+                IconButton(
+                    onClick = { uriHandler.openUri("mailto:nishant.28@outlook.com") },
+                    interactionSource = interactionSources[3],
+                    shapes = IconButtonDefaults.shapes(),
+                    modifier = Modifier.width(52.dp).animateWidth(interactionSources[3])
+                ) {
+                    Icon(
+                        painterResource(Res.drawable.email),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            },
+            menuContent = {}
+        )
     }
 }
 
