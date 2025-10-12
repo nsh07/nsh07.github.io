@@ -1,6 +1,5 @@
 package org.nsh07.nsh07.ui.homeScreen
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularWavyProgressIndicator
@@ -106,7 +105,7 @@ fun ProjectThumbnail(
             }
         },
         error = {
-            if (wide) Box(Modifier.fillMaxWidth().aspectRatio(2f).border(1.dp, colorScheme.outline, imageShape))
+            if (wide) Spacer(Modifier.fillMaxWidth().aspectRatio(2f))
         }
     )
 }
