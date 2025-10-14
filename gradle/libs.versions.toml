@@ -1,5 +1,5 @@
 [versions]
-androidx-lifecycle = "2.9.4"
+androidx-lifecycle = "2.9.5"
 coil3 = "3.3.0"
 composeMultiplatform = "1.10.0-alpha02"
 haze = "1.6.10"
