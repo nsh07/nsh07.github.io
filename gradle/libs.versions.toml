@@ -1,12 +1,12 @@
 [versions]
-androidx-lifecycle = "2.9.4"
+androidx-lifecycle = "2.9.5"
 coil3 = "3.3.0"
-composeMultiplatform = "1.10.0-alpha02"
+composeMultiplatform = "1.10.0-alpha03"
 haze = "1.6.10"
-kotlin = "2.2.20"
-ksp = "2.2.20-2.0.4"
+kotlin = "2.2.21"
+ksp = "2.3.1"
 ktor = "3.3.1"
-material3-adaptive = "1.2.0-alpha07"
+material3-adaptive = "1.2.0"
 
 [libraries]
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
