@@ -143,8 +143,6 @@ fun AppHomeScreen(
         val scrolledUp by derivedStateOf { listState.lastScrolledForward }
 
         val showTopBar by remember { derivedStateOf { listState.firstVisibleItemIndex > 1 } }
-        val experienceSectionVisible by remember { derivedStateOf { listState.firstVisibleItemIndex in paragraphCount + 2..<paragraphCount + experienceCount + 3 } }
-        val projectsSectionsVisible by remember { derivedStateOf { listState.firstVisibleItemIndex in paragraphCount + experienceCount + 3..1000 } }
 
         val scrollBehavior = pinnedScrollBehavior()
         val hazeState = rememberHazeState(true)
@@ -160,10 +158,14 @@ fun AppHomeScreen(
                     enter = slideInVertically(motionScheme.slowSpatialSpec(), initialOffsetY = { -it }),
                     exit = slideOutVertically(motionScheme.slowSpatialSpec(), targetOffsetY = { -it })
                 ) {
-                    val topBarContent = when {
-                        experienceSectionVisible -> 1
-                        projectsSectionsVisible -> 2
-                        else -> 0
+                    val topBarContent by remember {
+                        derivedStateOf {
+                            when (listState.firstVisibleItemIndex) {
+                                in paragraphCount + 2..<paragraphCount + experienceCount + 3 -> 1
+                                in paragraphCount + experienceCount + 3..100 -> 2
+                                else -> 0
+                            }
+                        }
                     }
                     TopAppBar(
                         title = {
