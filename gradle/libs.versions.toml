@@ -1,7 +1,7 @@
 [versions]
 androidx-lifecycle = "2.9.6"
 coil3 = "3.3.0"
-composeMultiplatform = "1.10.0-rc01"
+composeMultiplatform = "1.10.0-alpha03"
 haze = "1.7.1"
 kotlin = "2.2.21"
 ksp = "2.3.3"
