@@ -95,7 +95,7 @@ fun Nsh07Theme(
 
     MaterialExpressiveTheme(
         colorScheme = colorScheme,
-        typography = AppTypography(),
+        typography = AppTypography,
         content = content
     )
 }

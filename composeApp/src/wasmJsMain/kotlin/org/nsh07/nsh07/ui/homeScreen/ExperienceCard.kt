@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.Dp
@@ -80,9 +79,9 @@ fun ExperienceCardDurationText(experience: Experience, modifier: Modifier = Modi
 fun ExperienceCardMainContent(experience: Experience, modifier: Modifier = Modifier) {
     Column(modifier) {
         FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
-            Text(experience.position, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
-            Text(" $bullet ", style = typography.bodyLarge, fontWeight = FontWeight.Medium)
-            Text(experience.company, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Text(experience.position, style = typography.bodyLarge)
+            Text(" $bullet ", style = typography.bodyLarge)
+            Text(experience.company, style = typography.bodyLarge)
             Icon(
                 painterResource(Res.drawable.open_in_browser),
                 null,

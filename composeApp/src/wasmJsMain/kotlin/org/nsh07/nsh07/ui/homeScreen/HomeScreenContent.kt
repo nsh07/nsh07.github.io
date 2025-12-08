@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +41,7 @@ fun NameAndDesc(horizontalPadding: Dp = 0.dp) {
     Text(
         "I build performant, beautiful apps for mobile and desktop.",
         style = typography.bodyLarge,
+        fontFamily = typography.bodyMedium.fontFamily,
         color = colorScheme.onSurfaceVariant,
         modifier = Modifier.widthIn(max = 320.dp).padding(horizontal = horizontalPadding)
     )
@@ -143,6 +143,7 @@ fun LazyListScope.mainContent(
         Text(
             it,
             style = typography.bodyLarge,
+            fontFamily = typography.bodyMedium.fontFamily,
             color = colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = cardPadding, bottom = 16.dp, end = cardPadding)
         )
@@ -163,7 +164,7 @@ fun LazyListScope.mainContent(
                 .padding(start = cardPadding)
                 .clickable { uriHandler.openUri("https://www.linkedin.com/in/nsh07/") }
         ) {
-            Text("View LinkedIn profile ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+            Text("View LinkedIn profile ", style = typography.bodyLarge)
             Icon(painterResource(Res.drawable.open_in_browser), null, Modifier.size(16.dp))
         }
         Spacer(Modifier.height(112.dp))
@@ -189,7 +190,7 @@ fun LazyListScope.mainContent(
                 .padding(start = cardPadding)
                 .clickable { uriHandler.openUri("https://github.com/nsh07") }
         ) {
-            Text("View all projects on GitHub ", style = typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+            Text("View all projects on GitHub ", style = typography.bodyLarge)
             Icon(painterResource(Res.drawable.open_in_browser), null, Modifier.size(16.dp))
         }
         Spacer(Modifier.height(112.dp))
