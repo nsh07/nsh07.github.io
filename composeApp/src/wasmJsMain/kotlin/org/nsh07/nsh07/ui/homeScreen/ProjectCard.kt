@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
@@ -118,7 +117,7 @@ fun ProjectMainContent(
 ) {
     Column(modifier) {
         FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
-            Text(project.name, style = typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Text(project.name, style = typography.bodyLarge)
             Icon(
                 painterResource(Res.drawable.open_in_browser),
                 null,

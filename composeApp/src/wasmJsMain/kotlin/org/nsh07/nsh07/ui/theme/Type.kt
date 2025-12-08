@@ -5,34 +5,52 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 
 import nsh07.composeapp.generated.resources.Res
-import nsh07.composeapp.generated.resources.dm_serif_text
-import nsh07.composeapp.generated.resources.inter_variable
+import nsh07.composeapp.generated.resources.google_sans_flex_400
+import nsh07.composeapp.generated.resources.google_sans_flex_600
 import org.jetbrains.compose.resources.Font
 
 // Default Material 3 typography values
 val baseline = Typography()
 
-@Composable
-fun AppTypography() = Typography().run {
-    val bodyFontFamily = FontFamily(Font(Res.font.inter_variable))
+val AppTypography
+    @Composable get() = Typography().run {
+        val bodyFontFamily = FontFamily(Font(Res.font.google_sans_flex_400))
 
-    val displayFontFamily = FontFamily(Font(Res.font.dm_serif_text))
+        val displayFontFamily = FontFamily(Font(Res.font.google_sans_flex_600))
 
-    copy(
-        displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
-        displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),
-        displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
-        headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
-        headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily),
-        headlineSmall = baseline.headlineSmall.copy(fontFamily = displayFontFamily),
-        titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily),
-        titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily),
-        titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily),
-        bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
-        bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily),
-        bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
-        labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
-        labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
-        labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily)
-    )
-}
+        copy(
+            displayLarge = baseline.displayLarge.copy(
+                fontFamily = displayFontFamily,
+                fontFeatureSettings = "ss02, dlig"
+            ),
+            displayMedium = baseline.displayMedium.copy(
+                fontFamily = displayFontFamily,
+                fontFeatureSettings = "ss02, dlig"
+            ),
+            displaySmall = baseline.displaySmall.copy(
+                fontFamily = displayFontFamily,
+                fontFeatureSettings = "ss02, dlig"
+            ),
+            headlineLarge = baseline.headlineLarge.copy(
+                fontFamily = displayFontFamily,
+                fontFeatureSettings = "ss02, dlig"
+            ),
+            headlineMedium = baseline.headlineMedium.copy(
+                fontFamily = displayFontFamily,
+                fontFeatureSettings = "ss02, dlig"
+            ),
+            headlineSmall = baseline.headlineSmall.copy(
+                fontFamily = displayFontFamily,
+                fontFeatureSettings = "ss02, dlig"
+            ),
+            titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
+            titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
+            titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
+            bodyLarge = baseline.bodyLarge.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
+            bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
+            bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
+            labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
+            labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
+            labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig")
+        )
+    }
