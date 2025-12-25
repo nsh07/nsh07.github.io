@@ -236,47 +236,34 @@ fun LazyListScope.mainContent(
                 null,
                 modifier = Modifier.clickable { uriHandler.openUri("https://www.jetbrains.com/compose-multiplatform/") }
             )
-            Text(" in Kotlin. ", style = typography.bodyMedium, color = colorScheme.outline)
-            Text(
-                buildAnnotatedString {
-                    append("Deployed with ")
-                    withLink(
-                        LinkAnnotation.Url(
-                            url = "https://www.jetbrains.com/compose-multiplatform/",
-                            styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
-                        )
-                    ) {
-                        append("GitHub Pages.")
-                    }
-                },
-                style = typography.bodyMedium,
-                color = colorScheme.outline
-            )
+            Text(" in Kotlin.", style = typography.bodyMedium, color = colorScheme.outline)
         }
+        Text(
+            buildAnnotatedString {
+                append("Deployed with ")
+                withLink(
+                    LinkAnnotation.Url(
+                        url = "https://github.io/",
+                        styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
+                    )
+                ) {
+                    append("GitHub Pages.")
+                }
+            },
+            style = typography.bodyMedium,
+            color = colorScheme.outline,
+            modifier = Modifier.padding(horizontal = cardPadding)
+        )
         Text(
             buildAnnotatedString {
                 append("Text is set in ")
                 withLink(
                     LinkAnnotation.Url(
-                        url = "https://fonts.google.com/specimen/DM+Serif+Text",
-                        styles = TextLinkStyles(
-                            SpanStyle(
-                                color = colorScheme.onSurface,
-                                fontFamily = typography.displayLarge.fontFamily
-                            )
-                        )
-                    )
-                ) {
-                    append("DM Serif Text")
-                }
-                append(" and ")
-                withLink(
-                    LinkAnnotation.Url(
-                        url = "https://rsms.me/inter/",
+                        url = "https://fonts.google.com/specimen/Google+Sans+Flex",
                         styles = TextLinkStyles(SpanStyle(color = colorScheme.onSurface))
                     )
                 ) {
-                    append("Inter")
+                    append("Google Sans Flex")
                 }
                 append('.')
             },

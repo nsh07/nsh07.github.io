@@ -49,8 +49,8 @@ val AppTypography
             bodyLarge = baseline.bodyLarge.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
             bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
             bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
-            labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
-            labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig"),
-            labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily, fontFeatureSettings = "ss02, dlig")
+            labelLarge = baseline.labelLarge.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
+            labelMedium = baseline.labelMedium.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig"),
+            labelSmall = baseline.labelSmall.copy(fontFamily = displayFontFamily, fontFeatureSettings = "ss02, dlig")
         )
     }
