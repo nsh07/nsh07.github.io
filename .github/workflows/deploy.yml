@@ -3,13 +3,14 @@ name: Deploy WasmJS App to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger the workflow on pushes to the main branch
-  workflow_dispatch:  # Allow manual triggering
+      - main
+  workflow_dispatch:
 
 permissions:
-  contents: read  # Required to fetch the repository content
-  pages: write    # Allow deployment to GitHub Pages
-  id-token: write # Required by actions/configure-pages
+  actions: read
+  contents: read
+  id-token: write
+  pages: write
 
 jobs:
   build-and-deploy:
@@ -38,7 +39,6 @@ jobs:
         with:
           path: ./composeApp/build/dist/wasmJs/productionExecutable
 
-      # 7. Deploy to GitHub Pages
-      - name: "Deploy to GitHub Pages"
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
