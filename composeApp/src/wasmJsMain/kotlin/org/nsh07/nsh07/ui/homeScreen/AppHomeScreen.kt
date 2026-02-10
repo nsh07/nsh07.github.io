@@ -7,11 +7,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -20,10 +18,6 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
@@ -145,11 +139,6 @@ fun AppHomeScreen(
         val showTopBar by remember { derivedStateOf { listState.firstVisibleItemIndex > 1 } }
 
         val scrollBehavior = pinnedScrollBehavior()
-        val hazeState = rememberHazeState(true)
-        val topAppBarColors = topAppBarColors(
-            containerColor = colorScheme.surface,
-            scrolledContainerColor = colorScheme.surface
-        )
 
         Scaffold(
             topBar = {
@@ -195,22 +184,7 @@ fun AppHomeScreen(
                                 }
                             }
                         },
-                        scrollBehavior = scrollBehavior,
-                        colors = topAppBarColors.copy(
-                            scrolledContainerColor = topAppBarColors.scrolledContainerColor.copy(
-                                0.7f
-                            )
-                        ),
-                        modifier = Modifier
-                            .hazeEffect(
-                                hazeState,
-                                style = HazeStyle(
-                                    backgroundColor = colorScheme.surface,
-                                    tint = null,
-                                    blurRadius = 20.dp,
-                                    noiseFactor = 0f
-                                )
-                            )
+                        scrollBehavior = scrollBehavior
                     )
                 }
             },
@@ -225,7 +199,7 @@ fun AppHomeScreen(
                     end = innerPadding.calculateEndPadding(layoutDirection),
                     bottom = 48.dp
                 ),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).hazeSource(hazeState)
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
             ) {
                 item { NameAndDesc(horizontalPadding = 16.dp) }
                 item { SocialIcons(Modifier.padding(top = 32.dp, start = 12.dp, end = 12.dp)) }
