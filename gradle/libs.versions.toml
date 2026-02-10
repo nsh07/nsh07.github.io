@@ -2,7 +2,6 @@
 androidx-lifecycle = "2.9.6"
 coil3 = "3.3.0"
 composeMultiplatform = "1.11.0-alpha01"
-haze = "1.7.1"
 kotlin = "2.3.0"
 ksp = "2.3.4"
 ktor = "3.3.3"
@@ -20,7 +19,6 @@ compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptiv
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
-haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
