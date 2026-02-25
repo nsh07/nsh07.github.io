@@ -1,9 +1,9 @@
 [versions]
 androidx-lifecycle = "2.9.6"
-coil3 = "3.3.0"
-composeMultiplatform = "1.11.0-alpha02"
+coil3 = "3.4.0"
+composeMultiplatform = "1.11.0-alpha03"
 kotlin = "2.3.10"
-ksp = "2.3.5"
+ksp = "2.3.6"
 ktor = "3.4.0"
 material3-adaptive = "1.2.0"
 
