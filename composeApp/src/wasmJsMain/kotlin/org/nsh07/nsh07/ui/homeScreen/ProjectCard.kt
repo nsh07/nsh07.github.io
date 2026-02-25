@@ -2,9 +2,9 @@ package org.nsh07.nsh07.ui.homeScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -99,9 +99,10 @@ fun ProjectThumbnail(
             .then(modifier)
             .clip(imageShape),
         loading = {
-            Box(Modifier.fillMaxWidth().aspectRatio(2f)) {
-                CircularWavyProgressIndicator(Modifier.align(Alignment.Center))
-            }
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxWidth().aspectRatio(2f)
+            ) { LoadingIndicator() }
         },
         error = {
             if (wide) Spacer(Modifier.fillMaxWidth().aspectRatio(2f))
