@@ -1,10 +1,10 @@
 [versions]
-androidx-lifecycle = "2.9.6"
+androidx-lifecycle = "2.10.0"
 coil3 = "3.4.0"
-composeMultiplatform = "1.11.0-alpha03"
-kotlin = "2.3.10"
+composeMultiplatform = "1.11.0-beta02"
+kotlin = "2.3.20"
 ksp = "2.3.6"
-ktor = "3.4.0"
+ktor = "3.4.2"
 material3-adaptive = "1.2.0"
 
 [libraries]
