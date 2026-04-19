@@ -2,6 +2,7 @@
 androidx-lifecycle = "2.10.0"
 coil3 = "3.4.0"
 composeMultiplatform = "1.11.0-beta02"
+composeMaterial3 = "1.11.0-alpha06"
 kotlin = "2.3.20"
 ksp = "2.3.6"
 ktor = "3.4.2"
@@ -14,7 +15,7 @@ coil-kt = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil-kt-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMaterial3" }
 compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "material3-adaptive" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
