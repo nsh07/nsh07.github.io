@@ -1,11 +1,11 @@
 [versions]
-androidx-lifecycle = "2.10.0"
-coil3 = "3.4.0"
-composeMultiplatform = "1.11.0-beta02"
-composeMaterial3 = "1.11.0-alpha06"
-kotlin = "2.3.20"
-ksp = "2.3.6"
-ktor = "3.4.2"
+androidx-lifecycle = "2.11.0"
+coil3 = "3.5.0"
+composeMultiplatform = "1.11.1"
+composeMaterial3 = "1.11.0-alpha07"
+kotlin = "2.4.10"
+ksp = "2.3.10"
+ktor = "3.5.1"
 material3-adaptive = "1.2.0"
 
 [libraries]
