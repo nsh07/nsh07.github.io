@@ -79,7 +79,6 @@ fun ProjectCard(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ProjectThumbnail(
     project: Repo,
