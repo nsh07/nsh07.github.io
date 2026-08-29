@@ -10,7 +10,10 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +43,7 @@ fun ProjectCard(
     val shapes = shapes
     val uriHandler = LocalUriHandler.current
 
-    val imageShape = remember(wide) { if (wide) shapes.medium else shapes.large }
+    val imageShape = shapes.largeIncreased
 
     Box(
         modifier
@@ -85,9 +88,19 @@ fun ProjectThumbnail(
     modifier: Modifier = Modifier,
     imageUri: String? = null
 ) {
+    val fallbackUris = remember(project.fullName) {
+        listOf(
+            "https://raw.githubusercontent.com/${project.fullName}/refs/heads/main/androidApp/src/main/ic_launcher-playstore.png",
+            "https://raw.githubusercontent.com/${project.fullName}/refs/heads/main/app/src/main/ic_launcher-playstore.png"
+        )
+    }
+    var fallbackIndex by remember(imageUri, project.fullName) { mutableStateOf(0) }
+
     SubcomposeAsyncImage(
-        model = imageUri
-            ?: "https://raw.githubusercontent.com/${project.fullName}/refs/heads/main/fastlane/metadata/android/en-US/images/featureGraphic.png",
+        model = imageUri ?: fallbackUris[fallbackIndex],
+        onError = {
+            if (imageUri == null && fallbackIndex < fallbackUris.lastIndex) fallbackIndex++
+        },
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier
