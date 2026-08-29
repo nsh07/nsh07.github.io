@@ -1,10 +1,11 @@
 package org.nsh07.nsh07.ui.homeScreen
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,35 +13,39 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 @Composable
 fun AppHomeScreen(
@@ -175,11 +180,7 @@ fun AppHomeScreen(
             }
         }
     } else {
-        val scrolledUp by derivedStateOf { listState.lastScrolledForward }
-
         val showTopBar by remember { derivedStateOf { listState.firstVisibleItemIndex > 1 } }
-
-        val scrollBehavior = pinnedScrollBehavior()
 
         Scaffold(
             topBar = {
@@ -188,48 +189,24 @@ fun AppHomeScreen(
                     enter = slideInVertically(motionScheme.slowSpatialSpec(), initialOffsetY = { -it }),
                     exit = slideOutVertically(motionScheme.slowSpatialSpec(), targetOffsetY = { -it })
                 ) {
-                    val topBarContent by remember {
-                        derivedStateOf {
-                            when (listState.firstVisibleItemIndex) {
-                                in paragraphCount + 2..<paragraphCount + experienceCount + 3 -> 1
-                                in paragraphCount + experienceCount + 3..100 -> 2
-                                else -> 0
-                            }
-                        }
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp)
+                            .background(colorScheme.surfaceContainer)
+                    ) {
+                        ScrollSyncedTitle(
+                            listState = listState,
+                            titles = listOf("About", "Experience", "Projects"),
+                            sectionStartIndices = listOf(
+                                paragraphCount + 2,
+                                paragraphCount + experienceCount + 3
+                            ),
+                            modifier = Modifier.fillMaxSize().padding(start = cardPadding + 8.dp)
+                        )
                     }
-                    TopAppBar(
-                        title = {
-                            AnimatedContent(
-                                topBarContent,
-                                transitionSpec = {
-                                    slideInVertically(
-                                        animationSpec = motionScheme.fastSpatialSpec(),
-                                        initialOffsetY = {
-                                            if (scrolledUp) (it * 1.25).toInt() else (-it * 1.25).toInt()
-                                        }
-                                    ).togetherWith(
-                                        slideOutVertically(
-                                            animationSpec = motionScheme.fastSpatialSpec(),
-                                            targetOffsetY = {
-                                                if (scrolledUp) (-it * 1.25).toInt() else (it * 1.25).toInt()
-                                            }
-                                        )
-                                    )
-                                },
-                                modifier = Modifier.width(200.dp).padding(start = 8.dp)
-                            ) {
-                                when (it) {
-                                    1 -> Text("Experience")
-                                    2 -> Text("Projects")
-                                    else -> Text("About")
-                                }
-                            }
-                        },
-                        scrollBehavior = scrollBehavior
-                    )
                 }
-            },
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+            }
         ) { innerPadding ->
             val layoutDirection = LocalLayoutDirection.current
             LazyColumn(
@@ -254,6 +231,50 @@ fun AppHomeScreen(
                     topPadding = 96.dp
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ScrollSyncedTitle(
+    listState: LazyListState,
+    titles: List<String>,
+    sectionStartIndices: List<Int>,
+    modifier: Modifier = Modifier
+) {
+    val bandPx = with(LocalDensity.current) { 56.dp.toPx() }
+
+    val position by remember(listState, sectionStartIndices, bandPx) {
+        derivedStateOf {
+            val layoutInfo = listState.layoutInfo
+            sectionStartIndices.fold(0f) { acc, index ->
+                val item = layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
+                acc + if (item == null) {
+                    if (listState.firstVisibleItemIndex > index) 1f else 0f
+                } else {
+                    val top = (item.offset - layoutInfo.viewportStartOffset).toFloat()
+                    ((bandPx - top) / bandPx).coerceIn(0f, 1f)
+                }
+            }
+        }
+    }
+
+    BoxWithConstraints(modifier.clipToBounds()) {
+        // Slide by the full height of the bar so titles enter and leave at its very edges
+        val slideDistance = constraints.maxHeight.toFloat()
+        titles.forEachIndexed { index, title ->
+            Text(
+                title,
+                style = typography.titleLarge,
+                color = colorScheme.onSurface,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .graphicsLayer {
+                        val distance = index - position
+                        translationY = distance * slideDistance
+                        alpha = (1f - abs(distance)).coerceIn(0f, 1f)
+                    }
+            )
         }
     }
 }
