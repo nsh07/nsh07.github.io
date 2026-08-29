@@ -1,17 +1,39 @@
 package org.nsh07.nsh07.ui.homeScreen
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -33,19 +55,39 @@ fun AppHomeScreen(
 
     val paragraphs = remember {
         listOf(
-            "Hi, I'm Nishant. I'm currently a hobbyist open-source software developer and a computer science student at the Indian Institute of Information Technology Bhagalpur.",
+            "Hi, I'm Nishant. I'm currently a hobbyist open-source software developer, a Software Engineer Intern at Regain App, and a computer science student at the Indian Institute of Information Technology Bhagalpur.",
             "I've written a variety of programs in multiple languages over my years as a hobbyist developer since back when I was in middle and high school (~2019) in Python and C++, spanning multiple areas like games, CLI tools, GUI tools and automation scripts. I'm continuing to work towards persuing my passion of software development as my career, now as a CS student."
         )
     }
     val paragraphCount = remember { paragraphs.size }
 
-    val experiences = remember {
+    val experienceGroups = remember {
         listOf(
             Experience(
-                start = "Aug 2025",
+                start = "Jul 2026",
                 end = "Present",
+                position = "Software Engineer Intern",
+                description = "",
+                company = "Regain App",
+                companyUrl = "https://regainapp.ai/",
+                skills = listOf(),
+                location = "Remote"
+            ),
+            Experience(
+                start = "May 2026",
+                end = "Jul 2026",
+                position = "Software Engineer Intern",
+                description = "Implemented the Regain iOS app from scratch in Swift + SwiftUI using clean architecture principles and latest iOS and SwiftUI best practices (including Swift 6) and launched it into production on the Apple App Store for iPhone.",
+                company = "Regain App",
+                companyUrl = "https://regainapp.ai/",
+                skills = listOf("iOS Development", "Swift", "SwiftUI"),
+                location = "Bengaluru, Karnataka, India"
+            ),
+            Experience(
+                start = "Aug 2025",
+                end = "April 2026",
                 position = "Open Source Lead",
-                description = "Perform the role of Open Source Lead of the Development Club. Successfully organised OPCODE (Open Source Fest) 2025, while also contributing a project.",
+                description = "Performed the role of Open Source Lead of the Development Club. Successfully organised OPCODE (Open Source Fest) 2025, while also contributing a project. Hosted and managed FOSS United's FOSS Meetup at the college, with a participation of ~250.",
                 company = "DevC, IIIT Bhagalpur",
                 companyUrl = "https://gymkhana.iiitbh.ac.in/technical/",
                 skills = listOf()
@@ -59,9 +101,9 @@ fun AppHomeScreen(
                 companyUrl = "https://aiimsguwahati.ac.in/",
                 skills = listOf("Kotlin", "Jetpack Compose", "PyTorch Android", "Android SDK")
             )
-        )
+        ).groupByCompany()
     }
-    val experienceCount = remember { experiences.size }
+    val experienceCount = remember { experienceGroups.size }
 
     val cardPadding = 16.dp
 
@@ -124,7 +166,7 @@ fun AppHomeScreen(
             ) {
                 mainContent(
                     paragraphs,
-                    experiences,
+                    experienceGroups,
                     projectState,
                     cardPadding,
                     uriHandler,
@@ -204,7 +246,7 @@ fun AppHomeScreen(
                 item { SocialIcons(Modifier.padding(top = 32.dp, start = 12.dp, end = 12.dp)) }
                 mainContent(
                     paragraphs,
-                    experiences,
+                    experienceGroups,
                     projectState,
                     cardPadding,
                     uriHandler,
